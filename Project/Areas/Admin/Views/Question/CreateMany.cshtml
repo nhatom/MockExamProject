@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Xác nhận thêm gói câu hỏi</h2>
+    </div>
+    <div class="container shadow p-5">
+        <div class="row pb-2">
+            <h2>Thêm</h2>
+        </div>
+        <form method="post" asp-area="Admin" asp-controller="Question" asp-action="CreateMany">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputFile">Nhập URL file word</label>
+                    <input type="text" class="form-control mb-3" name="inputFile" placeholder="Nhập đường dẫn">
+                </div>
+            </div>
+ 
+            <div class="form-group col-md-6">
+                <label for="ChapterId">Chọn chương</label>
+                <select name="ChapterId" class="form-control" asp-items="@(new SelectList(ViewBag.chapterList,"Value","Text"))"></select>
+                
+            </div>
+            <div class="form-group col-md-6">
+                <label for="SubjectId">Chọn môn</label>
+                <select name="SubjectId" class="form-control" asp-items="@(new SelectList(ViewBag.subjectList,"Value","Text"))"></select>
+
+            </div>
+           
+            <div class="form-row">
+                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-pluss-fill"></i>Lưu</button>
+                <a asp-controller="Question" asp-action="Index" class="btn btn-lg btn-warning p-2">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</main>

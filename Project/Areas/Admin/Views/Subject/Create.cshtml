@@ -1,0 +1,37 @@
+﻿@model Project.Models.Subject
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Xác nhận thêm học phần</h2>
+    </div>
+    <div class="container shadow p-5">
+        <div class="row pb-2">
+            <h2>Thêm</h2>
+        </div>
+        <form method="post">
+            <div bsp-validation-summary="All"></div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="SubjectName">Name</label>
+                    <input type="text" class="form-control mb-3" asp-for="SubjectName" placeholder="Nhập tên Sản phẩm">
+                    <span asp-validation-for="SubjectName" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Description">Description</label>
+                    <input type="text" class="form-control mb-3" asp-for="Description" placeholder="Nhập mô tả">
+                    <span asp-validation-for="Description" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                
+                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-pluss-fill"></i>Lưu</button>
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning p-2">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</main>

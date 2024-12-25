@@ -1,0 +1,40 @@
+﻿@model Project.Models.Subject
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Xác nhận sửa học phần</h2>
+    </div>
+    <div class="container shadow p-5">
+        <div class="row pb-2">
+            <h2>Sửa Menu</h2>
+        </div>
+        <form method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-row">
+                <input type="number" class="form-control mb-3" asp-for="SubjectId" type="hidden">
+                <div class="form-group col-md-6">
+                    <label asp-for="SubjectId">SubjectId</label>
+                    <input type="number" class="form-control mb-3" asp-for="SubjectId" placeholder="Nhập tên học phần">
+                    <span asp-validation-for="SubjectName" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-row">
+                    
+                    
+                    <div class="form-group col-md-6">
+                        <label asp-for="Description">Description</label>
+                        <input type="text" class="form-control mb-3" asp-for="Description" placeholder="Enter Link">
+                        <span asp-validation-for="Description" class="alert-danger"></span>
+                    </div>
+                    
+                    
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-pluss-fill"></i>Lưu</button>
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning p-2">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</main>

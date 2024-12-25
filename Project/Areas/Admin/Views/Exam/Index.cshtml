@@ -1,0 +1,62 @@
+﻿@using Project.Models;
+@model IList<ExamViewModel>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Danh sách bài thi</h2>
+    </div>
+
+    <p>
+        <a type="button" class="btn btn-success" asp-area="Admin" asp-controller="Exam" asp-action="Create">
+            <i class="bi bi-file-earmark-text me-1">Thêm bài thi
+        </a>
+    </p>
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body mt-4">
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th class="col-1 text-center">#</th>
+                                    <th class="col-3 text-center">Tên bài thi</th>
+                                    <th class="col-2 text-center">Người tạo</th>
+                                    <th class="col-2 text-center">Môn học</th>
+                                    <th class="col-1 text-center">Thời gian</th>
+                                    <th class="col-1 text-center">Số câu hỏi</th>
+                                    <th class="col-2 text-center">Chức năng</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th class="text-center" scope="row">@item.ExamId</th>
+                                        <td><a asp-controller="Menu" asp-action="Details" asp-route-id="@item.SubjectId" class="text-primary">@item.ExamName</a></td>
+                                        <td class="text-center">@item.CreatedBy</td>
+                                        <td class="text-center">@item.SubjectName</td>
+                                        <td class="text-center">@item.Time</td>
+                                        <td class="text-center">@item.NumberOfQuestion</td>
+                                        <td class="text-center">
+                                            <a asp-area="Admin" asp-controller="Exam" asp-action="Edit" asp-route-id="@item.SubjectId" class="btn btn-primary btn-sm" title="Sửa thông tin học phần"><i class="bi bi-pencil"></i></a>
+                                            <a asp-area="Admin" asp-controller="Exam" asp-action="Delete" asp-route-id="@item.SubjectId" class="btn btn-danger btn-sm" title="Xóa thông tin học phần"><i class="bi bi-trash"></i></a>
+                                            <a asp-area="Admin" asp-controller="Exam" asp-action="Setting" asp-route-id="@item.SubjectId" class="btn btn-secondary btn-sm" title="Cài đặt"><i class="bi bi-gear"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

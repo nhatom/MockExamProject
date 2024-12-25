@@ -1,0 +1,81 @@
+﻿@model Project.Models.Exam
+
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h2>Cấu hình bài thi</h2>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-6">
+			<label asp-for="ExamId">Mã bài thi</label>
+			<input type="text" class="form-control mb-3" asp-for="ExamId" disabled>
+		</div>
+		<div class="form-group col-md-6">
+			<label asp-for="ExamName">Tên bài thi</label>
+			<input type="text" class="form-control mb-3" asp-for="ExamName" disabled>
+		</div>
+		<div class="form-group col-md-6">
+			<label asp-for="NumberOfQuestion">Số lượng câu hỏi</label>
+			<input type="text" class="form-control mb-3" asp-for="NumberOfQuestion" disabled>
+		</div>
+		<div class="form-group col-md-6">
+			<label asp-for="Time">Thời gian làm bài</label>
+			<input type="text" class="form-control mb-3" asp-for="Time" disabled>
+		</div>
+	</div>
+
+	<form asp-action="Setting" method="post">
+		<input type="hidden" asp-for="ExamId" />
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter1">Nhập số lượng câu hỏi chương I</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter2">Nhập số lượng câu hỏi chương II</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter3">Nhập số lượng câu hỏi chương III</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter4">Nhập số lượng câu hỏi chương IV</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter6">Nhập số lượng câu hỏi chương VI</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter7">Nhập số lượng câu hỏi chương VII</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="chapter8">Nhập số lượng câu hỏi chương VIII</label>
+				<input type="number" required min="0" max="50" class="form-control mb-3" name="ChapterI" placeholder="Nhập số lượng câu hỏi chương I">
+			</div>
+		</div>
+		<a class="btn btn-lg btn-warning p-2 mr-5" href="javascript:history.back()">
+			<i class="bi bi-arrow-left-circle"></i>Quay lại
+		</a>
+		<button type="submit" class="btn btn-lg btn-danger p-2">
+			<i class="bi bi-trash-fill"></i>Cập nhật
+		</button>
+
+	</form>
+</main>

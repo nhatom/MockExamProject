@@ -1,0 +1,157 @@
+﻿@model List<QuesOfExam>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Bài Kiểm Tra</h2>
+
+    <form asp-controller="Exam" asp-action="CreateDetail" method="post" class="shadow p-4 rounded bg-light" id="examForm">
+        <input type="hidden" name="ExamId" value="@ViewBag.ExamId" />
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Câu hỏi -->
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var countQues = i + 1;
+                    <div class="question-container mb-4 p-3 border rounded bg-white" id="question_@i">
+                        <div class="question-header mb-2">
+                            <h5 class="text-primary">Câu hỏi @countQues</h5>
+                            <p>@Model[i].QuestionText</p>
+                        </div>
+
+                        <!-- Đáp án -->
+                        <div>
+                            <input type="hidden" name="[@i].QuestionId" value="@Model[i].QuestionId" />
+                            <input type="hidden" name="[@i].CorrectOption" value="@Model[i].CorrectOption" />
+
+                            <div class="form-check">
+                                <input class="form-check-input answer-input" type="radio" id="optionA_@i" name="[@i].UserAnswer" value="A" data-question="@i">
+                                <label class="form-check-label" for="optionA_@i">A. @Model[i].OptionA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input answer-input" type="radio" id="optionB_@i" name="[@i].UserAnswer" value="B" data-question="@i">
+                                <label class="form-check-label" for="optionB_@i">B. @Model[i].OptionB</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input answer-input" type="radio" id="optionC_@i" name="[@i].UserAnswer" value="C" data-question="@i">
+                                <label class="form-check-label" for="optionC_@i">C. @Model[i].OptionC</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input answer-input" type="radio" id="optionD_@i" name="[@i].UserAnswer" value="D" data-question="@i">
+                                <label class="form-check-label" for="optionD_@i">D. @Model[i].OptionD</label>
+                            </div>
+
+                            <!-- Đánh dấu phân vân -->
+                            <div class="form-check mt-2">
+                                <input class="form-check-input mark-doubt" type="checkbox" id="markDoubt_@i" data-question="@i">
+                                <label class="form-check-label text-warning" for="markDoubt_@i">Đánh dấu phân vân</label>
+                            </div>
+
+                            <div id="status_@i" class="mt-2 text-danger">Trạng thái: Chưa điền</div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Cột bên phải: Danh sách câu hỏi -->
+            <div class="col-md-4" style="position: fixed; top: 20px; right: 0; width: 150px; height: 80%; overflow-y: auto;">
+                <h4>Danh sách câu hỏi</h4>
+                <ul id="questionList" class="list-unstyled">
+                    <!-- Danh sách câu hỏi sẽ được hiển thị ở đây -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Nộp bài -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Nộp bài</button>
+            <p id="countdown" class="mt-2"></p>
+            <div class="progress mt-3" style="height: 25px;">
+                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const questionsStatus = {};
+        const countdownElement = document.getElementById("countdown");
+        const progressBar = document.getElementById("progressBar");
+        const questionListElement = document.getElementById("questionList");
+        let countDownSeconds = 60; // Số giây còn lại (ví dụ: 60 giây)
+
+        // Theo dõi trạng thái từng câu hỏi
+        document.querySelectorAll(".answer-input").forEach(input => {
+            input.addEventListener("change", function () {
+                const questionId = this.getAttribute("data-question");
+                questionsStatus[questionId] = "Đã trả lời";
+                updateStatus(questionId);
+                updateQuestionList();
+            });
+        });
+
+        // Đánh dấu phân vân
+        document.querySelectorAll(".mark-doubt").forEach(input => {
+            input.addEventListener("change", function () {
+                const questionId = this.getAttribute("data-question");
+                questionsStatus[questionId] = this.checked ? "Phân vân" : "Chưa điền";
+                updateStatus(questionId);
+                updateQuestionList();
+            });
+        });
+
+        // Cập nhật trạng thái câu hỏi
+        function updateStatus(questionId) {
+            const statusElement = document.getElementById(`status_${questionId}`);
+            const status = questionsStatus[questionId] || "Chưa điền";
+            statusElement.textContent = `Trạng thái: ${status}`;
+            statusElement.className = status === "Chưa điền" ? "text-danger" : status === "Phân vân" ? "text-warning" : "text-success";
+        }
+
+        // Cập nhật danh sách câu hỏi
+        function updateQuestionList() {
+            questionListElement.innerHTML = "";
+
+            for (let i = 0; i < @Model.Count; i++) {
+                const status = questionsStatus[i] || "Chưa điền";
+                const listItem = document.createElement("li");
+                listItem.textContent = `${i + 1}`;
+                listItem.classList.add(status === "Chưa điền" ? "text-danger" : status === "Phân vân" ? "text-warning" : "text-success");
+                listItem.style.cursor = "pointer";
+                listItem.addEventListener("click", function () {
+                    document.getElementById(`question_${i}`).scrollIntoView({ behavior: "smooth" });
+                });
+                questionListElement.appendChild(listItem);
+            }
+        }
+
+        // Hiển thị thời gian đếm ngược
+        function updateCountdown() {
+            const minutes = Math.floor(countDownSeconds / 60);
+            const seconds = countDownSeconds % 60;
+            countdownElement.innerHTML = `Thời gian còn lại: ${minutes} phút ${seconds} giây`;
+
+            // Cập nhật thanh tiến trình
+            const progressPercentage = (countDownSeconds / 60) * 100;
+            progressBar.style.width = progressPercentage + "%";
+
+            // Nếu hết thời gian, tự động nộp bài
+            if (countDownSeconds <= 0) {
+                document.getElementById("examForm").submit();
+            } else {
+                countDownSeconds--;
+            }
+        }
+
+        // Bắt đầu đếm ngược
+        setInterval(updateCountdown, 1000);
+
+        // Tự động submit form khi hết thời gian
+        setInterval(function () {
+            if (countDownSeconds <= 0) {
+                document.getElementById("examForm").submit();
+            }
+        }, 1000);
+
+    });
+</script>

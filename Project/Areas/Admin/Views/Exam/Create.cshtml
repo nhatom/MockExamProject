@@ -1,0 +1,49 @@
+﻿@model Project.Models.Exam
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Xác nhận thêm đề thi</h2>
+    </div>
+    <div class="container shadow p-5">
+        <div class="row pb-2">
+            <h2>Thêm</h2>
+        </div>
+        <form method="post" asp-validation-summary="All">
+            <div bsp-validation-summary="All"></div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="ExamName">Tên bài thi</label>
+                    <input type="text" class="form-control mb-3" asp-for="ExamName" placeholder="Nhập tên bài thi" required>
+                    <span asp-validation-for="ExamName" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="SubjectId">Chọn Môn học</label>
+                <select asp-for="SubjectId" class="form-control" asp-items="@(new SelectList(ViewBag.subjectList,"Value","Text"))"></select>
+                <span asp-validation-for="SubjectId" class="alert-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Time">Thời gian làm bài</label>
+                    <input type="number" class="form-control mb-3" asp-for="Time" min="5" max="120" placeholder="Nhập thời gian" required>
+                    <span asp-validation-for="Time" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="NumberOfQuestion">Số lượng câu hỏi</label>
+                    <input type="number" class="form-control mb-3" asp-for="NumberOfQuestion" min="5" max="100" placeholder="Nhập số lượng câu hỏi" required>
+                    <span asp-validation-for="NumberOfQuestion" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-pluss-fill"></i>Lưu</button>
+                <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning p-2">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</main>

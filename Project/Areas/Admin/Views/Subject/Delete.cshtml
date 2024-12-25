@@ -1,0 +1,31 @@
+﻿@model Project.Models.Subject
+
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h2>Xác nhận xóa học phần</h2>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-6">
+			<label asp-for="SubjectId">MenuId</label>
+			<input type="text" class="form-control mb-3" asp-for="SubjectId" disabled>
+		</div>
+		<div class="form-group col-md-6">
+			<label asp-for="SubjectName">MenuName</label>
+			<input type="text" class="form-control mb-3" asp-for="SubjectName" disabled>
+		</div>
+	</div>
+
+	<form asp-action="Delete" method="post">
+		<input type="hidden" asp-for="SubjectId" />
+		<a class="btn btn-lg btn-warning p-2 mr-5" href="javascript:history.back()">
+			<i class="bi bi-arrow-left-circle"></i>Quay lại
+		</a>
+		<button type="submit" class="btn btn-lg btn-danger p-2">
+			<i class="bi bi-trash-fill"></i>Xóa học phần
+		</button>
+
+	</form>
+</main>

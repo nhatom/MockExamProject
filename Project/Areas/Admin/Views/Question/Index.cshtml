@@ -1,0 +1,68 @@
+﻿@using Project.Models;
+@model IList<Question>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Danh sách câu hỏi</h2>
+    </div>
+
+    <p>
+        <a type="button" class="btn btn-success" asp-area="Admin" asp-controller="Question" asp-action="Create">
+            <i class="bi bi-file-earmark-text me-1">Thêm câu hỏi</i>
+        </a>
+        <a type="button" class="btn btn-success" asp-area="Admin" asp-controller="Question" asp-action="CreateMany">
+            <i class="bi bi-file-earmark-text me-1">Thêm gói câu hỏi</i>
+        </a>
+    </p>
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body mt-4">
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th class="col-1 text-center">#</th>
+                                    <th class="col-3 text-center">Câu hỏi</th>
+                                    <th class="col-2 text-center">Đáp án A</th>
+                                    <th class="col-2 text-center">Đáp án B</th>
+                                    <th class="col-2 text-center">Đáp án C</th>
+                                    <th class="col-2 text-center">Đáp án D</th>
+                                    <th class="col-2 text-center">Đáp án đúng</th>
+                                    
+                                    <th class="col-2 text-center">Chức năng</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th class="text-center" scope="row">@item.QuestionId</th>
+                                       
+                                        <td class="text-center">@item.QuestionText</td>
+                                        <td class="text-center">@item.OptionA</td>
+                                        <td class="text-center">@item.OptionB</td>
+                                        <td class="text-center">@item.OptionC</td>
+                                        <td class="text-center">@item.OptionD</td>
+                                        <td class="text-center">@item.CorrectOption</td>
+                                        <td class="text-center">
+                                            <a asp-area="Admin" asp-controller="Question" asp-action="Edit" asp-route-id="@item.QuestionId" class="btn btn-primary btn-sm" title="Sửa câu hỏi"><i class="bi bi-pencil"></i></a>
+                                            <a asp-area="Admin" asp-controller="Question" asp-action="Delete" asp-route-id="@item.QuestionId" class="btn btn-danger btn-sm" title="Xóa câu hỏi"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

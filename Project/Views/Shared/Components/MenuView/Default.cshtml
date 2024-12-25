@@ -1,0 +1,67 @@
+﻿ @model IList<Menu>
+ @using Project.Utilities
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="@Url.Action("Index", "Home")" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>VinhQuiz</h2>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            @foreach (var menu in Model.Where(m => m.Levels == 1).OrderBy(n => n.MenuOrder))
+            {
+                string url = Functions.TitleSlugGeneration("list", menu.MenuName, menu.MenuId);
+                var Pid = menu.MenuId;
+                var Smenu = Model.Where(p => p.ParentId == Pid).OrderBy(p => p.MenuOrder).ToList();
+                if (!string.IsNullOrEmpty(menu.Link))
+                {
+                    url = menu.Link;
+                }
+
+                @if (Smenu.Count == 0)
+                {
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" class="nav-link">@menu.MenuName</a>
+                    </li>
+                }
+                else
+                {
+                    <div class="nav-item dropdown">
+                        <a asp-area="" asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.MenuName</a>
+                        <div class="dropdown-menu">
+                            @foreach (var smn in Smenu)
+                            {
+                                string url1 = Functions.TitleSlugGeneration("list", smn.MenuName, smn.MenuId);
+                                if (!string.IsNullOrEmpty(smn.Link))
+                                {
+                                    url = smn.Link;
+                                }
+                                <a asp-area="Views" asp-controller="@smn.ControllerName" asp-action="@smn.ActionName" class="dropdown-item">@smn.MenuName</a>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @if (string.IsNullOrEmpty(Functions._Username))
+        {
+            <a asp-area="" asp-controller="Login" asp-action="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Đăng nhập<i class="fa fa-arrow-right ms-3"></i></a>
+        }
+        else
+        {
+            <div class="nav-item dropdown">
+                <a class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">@Functions._Username</a>
+                <div class="dropdown-menu">
+                    <a asp-area="" asp-controller="UserProfile" asp-action="Index" class="dropdown-item">Trang cá nhân</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="dropdown-item">Đăng xuất</a>
+                </div>
+            </div>
+        }
+    </div>
+</nav>
+
+
+<!-- Navbar End -->

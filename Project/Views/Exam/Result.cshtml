@@ -1,0 +1,17 @@
+﻿<div class="container mt-4">
+    <h2 class="text-center mb-4">Kết quả bài làm</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4 rounded bg-light">
+                <p class="lead">Số câu hỏi: <strong>@ViewBag.TotalQuestions</strong></p>
+                <p class="lead">Số đáp án đúng: <strong>@ViewBag.CorrectAnswers</strong></p>
+                <p class="lead">Tỷ lệ chính xác: <strong>@ViewBag.Accuracy%</strong></p>
+
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("Index", "Exam")" class="btn btn-primary btn-lg">Trở lại trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
